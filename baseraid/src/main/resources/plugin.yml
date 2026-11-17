@@ -1,0 +1,29 @@
+name: BaseRaid
+version: 1.0.0
+main: com.baseraid.BaseRaidPlugin
+api-version: '1.21'
+description: Небесные базы с ядром, топливом и рейдами.
+authors: [ZCode]
+softdepend: [Vault]
+
+commands:
+  base:
+    description: Управление вашей базой
+    usage: |
+      /base buy - купить базу
+      /base home - телепорт на базу
+      /base info - информация о базе
+      /base delete confirm - удалить базу
+      /base fixcore - восстановить ядро
+    aliases: [b, база]
+  raid:
+    description: Рейд на доступные базы
+    usage: /raid | /raid leave
+
+permissions:
+  baseraid.use:
+    description: Доступ к командам базы и рейда
+    default: true
+  baseraid.admin:
+    description: Админ-команды (/base reload, /base tp)
+    default: op
