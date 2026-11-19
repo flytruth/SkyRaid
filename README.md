@@ -1,9 +1,9 @@
 # SkyRaid by BexindStudio
 
-Плагин для **Paper 1.21.1+**: небесные базы с защитой ядра на топливе и системой рейдов.
+Плагин для **Paper 1.21.11**: небесные базы с защитой ядра на топливе и системой рейдов.
 
-Собран под `paper-api 1.21.1-R0.1-SNAPSHOT`, Java 21. Работает на актуальных сборках
-Paper ветки 1.21.x; при необходимости целевая версия меняется одной строкой в `pom.xml`.
+Собран под Java 21. Работает на актуальных сборках
+Paper ветки 1.21.1; при необходимости целевая версия меняется одной строкой в `pom.xml`.
 
 ---
 
@@ -54,57 +54,3 @@ Paper ветки 1.21.x; при необходимости целевая вер
 | `/raid`        | Меню рейдов                   | `skyraid.command.raid` (по умолчанию всем) |
 | `/raid leave`  | Покинуть рейд                 | `skyraid.command.raid` |
 
-## Интеграция PvP-плагина
-
-Плагин публикует события, на которые подписывается ваш PvP-режим:
-
-```java
-@EventHandler
-public void onRaidStart(RaidStartEvent event) {
-    UUID raider = event.getRaiderId();
-    UUID owner = event.getBase().getOwnerId();
-    Location base = event.getBase().center();
-    // включить PvP для raider/owner в регионе базы
-}
-
-@EventHandler
-public void onRaidEnd(RaidEndEvent event) {
-    if (event.isSuccess()) {
-        // рейдер опустошил хранилище
-    }
-    // выключить PvP, причина: event.getReason()
-}
-```
-
-Проверить, в рейде ли игрок, можно через API:
-`skyRaid.getRaidManager().isRaiding(player.getUniqueId())`.
-
-## Сборка
-
-```bash
-mvn clean package
-# jar появится в target/SkyRaid-1.0.0.jar → в plugins/
-```
-
-При первом запуске создаются `config.yml` (все цены, времена, сообщения)
-и `bases.yml` (хранилище баз). Хранилище — человекочитаемый YAML,
-базы можно переносить/править вручную при выключенном сервере.
-
-## Структура проекта
-
-```
-src/main/java/dev/nordgate/skyraid/
-├── SkyRaidPlugin.java        — точка входа
-├── command/                  — /base, /raid
-├── config/PluginConfig.java  — типизированный config.yml
-├── economy/                  — цены и оплата ресурсами
-├── event/                    — BaseCreateEvent, RaidStartEvent, RaidEndEvent
-├── island/IslandGenerator.java — генерация и геометрия острова
-├── lang/Messages.java        — сообщения из конфига
-├── listener/                 — защита региона, взаимодействия, поток рейда
-├── menu/                     — GUI: ядро, список рейдов, подтверждение
-├── model/                    — BaseData, RaidSession, WallTier
-├── raid/RaidManager.java     — жизненный цикл рейда
-├── storage/BaseStorage.java  — bases.yml
-└── util/                     — текст, время, предметы
-```
