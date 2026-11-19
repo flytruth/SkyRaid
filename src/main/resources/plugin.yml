@@ -1,0 +1,26 @@
+name: SkyRaid
+version: 1.0.0
+main: dev.nordgate.skyraid.SkyRaidPlugin
+api-version: '1.21'
+author: Nordgate Studio
+description: Небесные базы с топливной защитой ядра и системой рейдов.
+
+commands:
+  base:
+    description: Управление небесной базой.
+    usage: /base <buy|tp|upgrade|info|reload>
+    aliases: [skybase]
+  raid:
+    description: Меню доступных рейдов.
+    usage: /raid [leave]
+
+permissions:
+  skyraid.command.base:
+    description: Доступ к командам базы.
+    default: true
+  skyraid.command.raid:
+    description: Доступ к меню рейдов.
+    default: true
+  skyraid.admin:
+    description: Административные команды (перезагрузка конфига).
+    default: op
